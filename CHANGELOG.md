@@ -1,3 +1,6 @@
+## 7.0.10
+  - Update Netty dependency to 4.1.134.Final [#541](https://github.com/logstash-plugins/logstash-input-beats/pull/541)
+
 ## 7.0.9
   - Update Netty dependency to 4.1.133.Final [#539](https://github.com/logstash-plugins/logstash-input-beats/pull/539)
 
