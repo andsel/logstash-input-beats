@@ -202,6 +202,12 @@ class LogStash::Inputs::Beats < LogStash::Inputs::Base
     @logger.info("Starting input listener", :address => "#{@host}:#{@port}")
 
     @server = create_server
+    begin
+      @server.bind()
+    rescue java.net.BindException => bind_exception
+      @server.stop rescue nil
+      fail LogStash::ConfigurationError, "could not bind to #{@host}:#{@port}; #{bind_exception.message}"
+    end
   end # def register
 
   def create_server
@@ -211,9 +217,7 @@ class LogStash::Inputs::Beats < LogStash::Inputs::Base
   end
 
   def run(output_queue)
-    message_listener = MessageListener.new(output_queue, self)
-    @server.setMessageListener(message_listener)
-    @server.listen
+    @server.run(MessageListener.new(output_queue, self))
   end # def run
 
   def stop
