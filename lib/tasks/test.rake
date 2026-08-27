@@ -49,8 +49,10 @@ namespace :test do
 
         puts "Filebeat: downloading from #{filebeat_url} to #{download_destination}"
         download(filebeat_url, download_destination)
+        puts "Filebeat: download completed. Unpacking..."
 
         untar_all(download_destination, VENDOR_PATH) { |e| e }
+        puts "Filebeat: unpack completed."
       end
     end
   end
